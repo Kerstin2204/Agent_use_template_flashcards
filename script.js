@@ -9,11 +9,28 @@ const wordPairList = document.querySelector("#word-pair-list");
 function renderWordPairs() {
   wordPairList.innerHTML = "";
 
-  for (const wordPair of wordPairs) {
+  for (let index = 0; index < wordPairs.length; index++) {
+    const wordPair = wordPairs[index];
     const listItem = document.createElement("li");
     listItem.textContent = wordPair.english + " - " + wordPair.german;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "delete-button";
+    deleteButton.textContent = "Löschen";
+    deleteButton.addEventListener("click", function () {
+      deleteWordPair(index);
+    });
+
+    listItem.appendChild(deleteButton);
     wordPairList.appendChild(listItem);
   }
+}
+
+// Removes a word pair at the selected list position.
+function deleteWordPair(index) {
+  wordPairs.splice(index, 1);
+  renderWordPairs();
 }
 
 // Adds a non-empty English and German word pair to the current page session.
