@@ -9,8 +9,11 @@ const practiceCard = document.querySelector("#practice-card");
 const practiceEnglish = document.querySelector("#practice-english");
 const practiceGerman = document.querySelector("#practice-german");
 const nextCardButton = document.querySelector("#next-card");
+const knownCardButton = document.querySelector("#known-card");
+const knownCardCount = document.querySelector("#known-card-count");
 const practiceMessage = document.querySelector("#practice-message");
 let practiceIndex = 0;
+let knownCardNumber = 0;
 
 // Loads saved word pairs from localStorage or returns an empty list.
 function loadWordPairs() {
@@ -102,6 +105,7 @@ function renderPracticeCard() {
     practiceGerman.textContent = "";
     practiceCard.disabled = true;
     nextCardButton.disabled = true;
+    knownCardButton.disabled = true;
     practiceMessage.textContent = "Keine Wortpaare zum Üben vorhanden.";
     return;
   }
@@ -111,12 +115,19 @@ function renderPracticeCard() {
   practiceGerman.textContent = wordPair.german;
   practiceCard.disabled = false;
   nextCardButton.disabled = false;
+  knownCardButton.disabled = false;
   practiceMessage.textContent = "";
 }
 
 // Reveals the German translation on the practice card.
 function revealGermanWord() {
   practiceGerman.hidden = false;
+}
+
+// Counts a card that the user marked as known for this session.
+function markCardAsKnown() {
+  knownCardNumber++;
+  knownCardCount.textContent = "Gewusst: " + knownCardNumber;
 }
 
 // Selects a random card that is different from the current card when possible.
@@ -137,5 +148,6 @@ function showNextRandomCard() {
 wordPairForm.addEventListener("submit", addWordPair);
 practiceCard.addEventListener("click", revealGermanWord);
 nextCardButton.addEventListener("click", showNextRandomCard);
+knownCardButton.addEventListener("click", markCardAsKnown);
 renderWordPairs();
 renderPracticeCard();

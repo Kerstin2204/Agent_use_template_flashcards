@@ -102,6 +102,21 @@ button:hover {
   cursor: default;
 }
 
+#practice-controls {
+  display: flex;
+  gap: 8px;
+}
+
+#practice-controls button:disabled {
+  background-color: #8795a1;
+  cursor: default;
+}
+
+#known-card-count {
+  margin: 12px 0 0;
+  font-weight: bold;
+}
+
 #practice-german {
   color: #dcecff;
 }
