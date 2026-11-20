@@ -84,3 +84,24 @@ button:hover {
 #word-pair-list .delete-button:hover {
   background-color: #7c1e1e;
 }
+
+#practice-card {
+  display: grid;
+  width: 100%;
+  min-height: 120px;
+  place-items: center;
+  gap: 16px;
+  margin-top: 0;
+  padding: 24px;
+  text-align: center;
+  background-color: #245c8d;
+}
+
+#practice-card:disabled {
+  background-color: #8795a1;
+  cursor: default;
+}
+
+#practice-german {
+  color: #dcecff;
+}

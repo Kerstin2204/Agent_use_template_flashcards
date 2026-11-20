@@ -5,6 +5,11 @@ const englishInput = document.querySelector("#english-word");
 const germanInput = document.querySelector("#german-word");
 const formMessage = document.querySelector("#form-message");
 const wordPairList = document.querySelector("#word-pair-list");
+const practiceCard = document.querySelector("#practice-card");
+const practiceEnglish = document.querySelector("#practice-english");
+const practiceGerman = document.querySelector("#practice-german");
+const practiceMessage = document.querySelector("#practice-message");
+let practiceIndex = 0;
 
 // Loads saved word pairs from localStorage or returns an empty list.
 function loadWordPairs() {
@@ -57,8 +62,14 @@ function renderWordPairs() {
 // Removes a word pair at the selected list position.
 function deleteWordPair(index) {
   wordPairs.splice(index, 1);
+
+  if (practiceIndex >= wordPairs.length) {
+    practiceIndex = 0;
+  }
+
   saveWordPairs();
   renderWordPairs();
+  renderPracticeCard();
 }
 
 // Adds a non-empty English and German word pair to the current page session.
@@ -78,7 +89,34 @@ function addWordPair(event) {
   wordPairForm.reset();
   formMessage.textContent = "Wortpaar hinzugefügt.";
   renderWordPairs();
+  renderPracticeCard();
+}
+
+// Shows the current card in English and hides its German answer.
+function renderPracticeCard() {
+  practiceGerman.hidden = true;
+
+  if (wordPairs.length === 0) {
+    practiceEnglish.textContent = "";
+    practiceGerman.textContent = "";
+    practiceCard.disabled = true;
+    practiceMessage.textContent = "Keine Wortpaare zum Üben vorhanden.";
+    return;
+  }
+
+  const wordPair = wordPairs[practiceIndex];
+  practiceEnglish.textContent = wordPair.english;
+  practiceGerman.textContent = wordPair.german;
+  practiceCard.disabled = false;
+  practiceMessage.textContent = "";
+}
+
+// Reveals the German translation on the practice card.
+function revealGermanWord() {
+  practiceGerman.hidden = false;
 }
 
 wordPairForm.addEventListener("submit", addWordPair);
+practiceCard.addEventListener("click", revealGermanWord);
 renderWordPairs();
+renderPracticeCard();
