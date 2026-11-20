@@ -8,6 +8,7 @@ const wordPairList = document.querySelector("#word-pair-list");
 const practiceCard = document.querySelector("#practice-card");
 const practiceEnglish = document.querySelector("#practice-english");
 const practiceGerman = document.querySelector("#practice-german");
+const nextCardButton = document.querySelector("#next-card");
 const practiceMessage = document.querySelector("#practice-message");
 let practiceIndex = 0;
 
@@ -100,6 +101,7 @@ function renderPracticeCard() {
     practiceEnglish.textContent = "";
     practiceGerman.textContent = "";
     practiceCard.disabled = true;
+    nextCardButton.disabled = true;
     practiceMessage.textContent = "Keine Wortpaare zum Üben vorhanden.";
     return;
   }
@@ -108,6 +110,7 @@ function renderPracticeCard() {
   practiceEnglish.textContent = wordPair.english;
   practiceGerman.textContent = wordPair.german;
   practiceCard.disabled = false;
+  nextCardButton.disabled = false;
   practiceMessage.textContent = "";
 }
 
@@ -116,7 +119,23 @@ function revealGermanWord() {
   practiceGerman.hidden = false;
 }
 
+// Selects a random card that is different from the current card when possible.
+function showNextRandomCard() {
+  if (wordPairs.length > 1) {
+    let nextIndex = Math.floor(Math.random() * (wordPairs.length - 1));
+
+    if (nextIndex >= practiceIndex) {
+      nextIndex++;
+    }
+
+    practiceIndex = nextIndex;
+  }
+
+  renderPracticeCard();
+}
+
 wordPairForm.addEventListener("submit", addWordPair);
 practiceCard.addEventListener("click", revealGermanWord);
+nextCardButton.addEventListener("click", showNextRandomCard);
 renderWordPairs();
 renderPracticeCard();
