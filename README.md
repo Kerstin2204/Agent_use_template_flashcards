@@ -1,4 +1,5 @@
 
 Flashcard website
 
-#Usage
+#usage:
+Öffne index.html im browser oder im VSCode preview.
